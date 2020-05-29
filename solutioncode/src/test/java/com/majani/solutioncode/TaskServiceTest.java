@@ -23,14 +23,14 @@ public class TaskServiceTest {
 	
 	@Test
 	public void testReadFile_ForNonJson() {				
-		SubTask[] subtask = service.readFile(new File("/target/FileWithNonJSONData.json"));
+		SubTask[] subtask = service.readFile(new File("/FileWithNonJSONData.json"));
 		Assert.assertNull(subtask);
 	}
 
 	
 	@Test
 	public void testRetrieveAllTasks() {
-		List<SubTask> list = service.retrieveAllTasks(new File("target\\InputFile.json"));
+		List<SubTask> list = service.retrieveAllTasks(new File("/InputFile.json"));
 		assertEquals(3, list.size());
 	}
 
