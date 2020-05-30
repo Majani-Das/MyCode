@@ -101,16 +101,10 @@ public class TaskService {
 		SubTask[] task = readFile(file);
 		if (task != null) {
 			for (int i = 0; i < task.length; i++) {
-				SubTask parentTask = new SubTask();
 				if (task[i].getParentID() == null) {
-					parentTask.setDescription(task[i].getDescription());
-					parentTask.setID(task[i].getID());
-					parentTask.setNextID(task[i].getNextID());
-					parentTask.setPreviousID(task[i].getPreviousID());
-
 					// Generate Subtasks list for parentTask
-					getSubTasks(task, parentTask);
-					parentTaskList.add(parentTask);
+					getSubTasks(task, task[i]);
+					parentTaskList.add(task[i]);
 
 				}
 			}
