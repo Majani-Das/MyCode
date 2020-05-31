@@ -1,15 +1,12 @@
-package com.majani.solutioncode.model;
+package com.majani.mysolution.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "description", "ID", "previousID", "nextID", "parentID", "subtasks" })
-public class SubTask implements Comparable<SubTask> {
+@JsonPropertyOrder({ "description", "ID", "previousID", "nextID", "parentID" })
+public class SubTask {
 
 	@JsonProperty("description")
 	private String description;
@@ -21,27 +18,12 @@ public class SubTask implements Comparable<SubTask> {
 	private Integer parentID;
 	@JsonProperty("previousID")
 	private Integer previousID;
-	@JsonProperty("subtasks")
-	private List<SubTask> subTasks;
 
 	/**
 	 * No args constructor for use in serialization
 	 * 
 	 */
 	public SubTask() {
-		if (this.subTasks == null)
-			this.subTasks = new ArrayList<SubTask>();
-	}
-
-	public SubTask(String description, int iD, Integer nextID, Integer parentID, Integer previousID,
-			List<SubTask> subtasks) {
-		super();
-		this.description = description;
-		this.iD = iD;
-		this.nextID = nextID;
-		this.parentID = parentID;
-		this.previousID = previousID;
-		this.subTasks = subtasks;
 	}
 
 	@JsonProperty("description")
@@ -94,23 +76,4 @@ public class SubTask implements Comparable<SubTask> {
 		this.previousID = previousID;
 	}
 
-	public List<SubTask> getSubtasks() {
-		return subTasks;
-	}
-
-	public void setSubtasks(List<SubTask> subtasks) {
-		this.subTasks = subtasks;
-	}
-
-	public void addSubTaskItems(SubTask subTaskItem) {
-		if (this.subTasks != null && !this.subTasks.contains(subTaskItem)) {
-			this.subTasks.add(subTaskItem);
-			Collections.sort(this.subTasks);
-		}
-
-	}
-
-	public int compareTo(SubTask subTask) {
-		return this.getID().compareTo(subTask.getID());
-	}
 }
