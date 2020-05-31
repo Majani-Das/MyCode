@@ -14,9 +14,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.majani.mysolution.model.SubTask;
 import com.majani.mysolution.model.Task;
 
-public class TaskService2 {
+public class TaskService {
 
-	Logger logger = Logger.getLogger(TaskService2.class.getName());
+	Logger logger = Logger.getLogger(TaskService.class.getName());
 	ObjectMapper objectMapper = new ObjectMapper();
 	List<Task> taskList = new ArrayList<Task>();
 
