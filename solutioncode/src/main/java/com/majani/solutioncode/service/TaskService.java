@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.majani.mysolution.model.SubTask;
@@ -28,35 +27,10 @@ public class TaskService {
 	 */
 	public void generateFile(String input, String output) {
 		if (new File(input).length() != 0) {
-			List<Task> tasks = retrieveAllTasks(new File(input));
-			prepareJsonData(tasks);
+			prepareJsonData(readFile(new File(input)));
 			writeFile(new File(output), taskList);
 		} else
 			logger.log(Level.WARNING, "File is empty or missing!!!");
-	}
-
-	/**
-	 * Retrieve all tasks list
-	 * 
-	 * @param file
-	 * @return
-	 */
-	public List<Task> retrieveAllTasks(File file) {
-
-		// Read the input json file to task object
-		SubTask[] task = readFile(file);
-		List<Task> toDoTaskList = new ArrayList<Task>();
-		if (task != null) {
-			for (SubTask subtask : task) {
-				Task toDoTask = new Task();
-				toDoTask.setTask(subtask);
-				toDoTask.setTasksList(new ArrayList<Task>());
-				toDoTaskList.add(toDoTask);
-			}
-		} else
-			logger.log(Level.WARNING, "File does not contain proper data.");
-		Collections.sort(toDoTaskList);
-		return toDoTaskList;
 	}
 
 	/**
@@ -65,15 +39,26 @@ public class TaskService {
 	 * @param parentTaskList
 	 * @return
 	 */
-	public List<Task> prepareJsonData(List<Task> toDoTaskList) {
-		for (int i = 0; i < toDoTaskList.size(); i++) {
-			if (toDoTaskList.get(i).getTask().getParentID() == null) {
-				getTasks(toDoTaskList, toDoTaskList.get(i));
-				taskList.add(toDoTaskList.get(i));
+	public List<Task> prepareJsonData(SubTask[] task) {
+
+		List<Task> toDoTaskList = new ArrayList<Task>();
+		if (task != null) {
+			for (SubTask subtask : task) {
+				Task toDoTask = new Task();
+				toDoTask.setTask(subtask);
+				toDoTask.setTasksList(new ArrayList<Task>());
+				toDoTaskList.add(toDoTask);
 			}
+			Collections.sort(toDoTaskList);
+			for (int i = 0; i < toDoTaskList.size(); i++) {
+				if (toDoTaskList.get(i).getTask().getParentID() == null) {
+					getTasks(toDoTaskList, toDoTaskList.get(i));
+					taskList.add(toDoTaskList.get(i));
+				}
 
-		}
-
+			}
+		}else
+			logger.log(Level.WARNING,"File does not contain proper data.");
 		Collections.sort(taskList);
 		return taskList;
 	}
@@ -87,8 +72,8 @@ public class TaskService {
 	public void getTasks(List<Task> toDoTaskList, Task parent) {
 		for (Task subTask : toDoTaskList) {
 			if (subTask.getTask().getParentID() != null
-					&& subTask.getTask().getParentID() == parent.getTask().getID()) {
-
+					&& subTask.getTask().getParentID().equals(parent.getTask().getID())) {
+				
 				parent.addTaskItems(subTask);
 
 				getTasks(toDoTaskList, subTask);
@@ -124,8 +109,8 @@ public class TaskService {
 
 	public File writeFile(File file, List<Task> tasks) {
 		if (!tasks.isEmpty()) {
-			try {
-				ObjectWriter writer = objectMapper.writer(new DefaultPrettyPrinter());
+			try {				
+				ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
 				writer.writeValue(file, tasks);
 
 			} catch (IOException e) {
