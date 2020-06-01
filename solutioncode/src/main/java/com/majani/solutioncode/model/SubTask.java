@@ -11,13 +11,13 @@ public class SubTask {
 	@JsonProperty("description")
 	private String description;
 	@JsonProperty("ID")
-	private Integer iD;
+	private String iD;
 	@JsonProperty("nextID")
-	private Integer nextID;
+	private String nextID;
 	@JsonProperty("parentID")
-	private Integer parentID;
+	private String parentID;
 	@JsonProperty("previousID")
-	private Integer previousID;
+	private String previousID;
 
 	/**
 	 * No args constructor for use in serialization
@@ -37,42 +37,42 @@ public class SubTask {
 	}
 
 	@JsonProperty("ID")
-	public Integer getID() {
+	public String getID() {
 		return iD;
 	}
 
 	@JsonProperty("ID")
-	public void setID(Integer iD) {
+	public void setID(String iD) {
 		this.iD = iD;
 	}
 
 	@JsonProperty("nextID")
-	public Integer getNextID() {
+	public String getNextID() {
 		return nextID;
 	}
 
 	@JsonProperty("nextID")
-	public void setNextID(Integer nextID) {
+	public void setNextID(String nextID) {
 		this.nextID = nextID;
 	}
 
 	@JsonProperty("parentID")
-	public Integer getParentID() {
+	public String getParentID() {
 		return parentID;
 	}
 
 	@JsonProperty("parentID")
-	public void setParentID(Integer parentID) {
+	public void setParentID(String parentID) {
 		this.parentID = parentID;
 	}
 
 	@JsonProperty("previousID")
-	public Integer getPreviousID() {
+	public String getPreviousID() {
 		return previousID;
 	}
 
 	@JsonProperty("previousID")
-	public void setPreviousID(Integer previousID) {
+	public void setPreviousID(String previousID) {
 		this.previousID = previousID;
 	}
 
