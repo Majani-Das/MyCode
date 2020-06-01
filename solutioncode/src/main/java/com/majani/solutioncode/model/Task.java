@@ -1,6 +1,6 @@
 package com.majani.mysolution.model;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,7 +58,9 @@ public class Task implements Comparable<Task> {
 
 	public int compareTo(Task task) {
 		// TODO Auto-generated method stub
-		return this.task.getID().compareTo(task.getTask().getID());
+		UUID UUID1 = UUID.fromString(this.task.getID());
+		UUID UUID2 = UUID.fromString(task.getTask().getID());
+		return UUID2.compareTo(UUID1);
 	}
 
 }
